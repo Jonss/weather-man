@@ -1,18 +1,21 @@
 package jonss.com.github.weatherman.di;
 
+import android.content.Context;
+
 import dagger.Module;
 import dagger.Provides;
-import jonss.com.github.weatherman.api.DarkSkyService;
+import jonss.com.github.weatherman.api.WeatherForecastService;
+import jonss.com.github.weatherman.ui.WeatherAdapter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static jonss.com.github.weatherman.Constants.DARK_SKY_URL;
+import static jonss.com.github.weatherman.utils.Constants.DARK_SKY_URL;
 
 /**
  * Created by joao on 27/01/17.
  */
 
-@Module
+@Module(includes = ActivityModule.class)
 public class WeatherManModule {
 
     @Provides
@@ -24,8 +27,13 @@ public class WeatherManModule {
     }
 
     @Provides
-    public DarkSkyService weatherService(Retrofit retrofit) {
-        return retrofit.create(DarkSkyService.class);
+    public WeatherForecastService weatherService(Retrofit retrofit) {
+        return retrofit.create(WeatherForecastService.class);
+    }
+
+    @Provides
+    public WeatherAdapter providesWeatherAdapter(Context context){
+        return new WeatherAdapter(context);
     }
 
 

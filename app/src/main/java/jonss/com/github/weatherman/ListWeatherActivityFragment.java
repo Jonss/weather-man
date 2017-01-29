@@ -2,33 +2,46 @@ package jonss.com.github.weatherman;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
-import jonss.com.github.weatherman.api.DarkSkyService;
+import jonss.com.github.weatherman.api.WeatherForecastService;
+import jonss.com.github.weatherman.di.ActivityModule;
 import jonss.com.github.weatherman.di.DaggerWeatherManComponent;
-import jonss.com.github.weatherman.di.WeatherManComponent;
 import jonss.com.github.weatherman.model.DailyWeather;
+import jonss.com.github.weatherman.ui.WeatherAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static jonss.com.github.weatherman.Constants.DARK_SKY_API_KEY;
+import static jonss.com.github.weatherman.utils.Constants.DARK_SKY_API_KEY;
+import static jonss.com.github.weatherman.utils.StringUtils.toDecimal;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class ListWeatherActivityFragment extends Fragment {
+    
+    TextView maxTodayTemperature;
+    TextView minTodayTemperature;
+    TextView summaryTodayTemperature;
+
+    RecyclerView weatherRecyclerView;
+
+    @Inject
+    WeatherAdapter weatherAdapter;
+
+    @Inject
+    WeatherForecastService weatherForecastService;
 
     public ListWeatherActivityFragment() {
     }
-
-    @Inject
-    DarkSkyService darkSkyService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,15 +49,25 @@ public class ListWeatherActivityFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_list_weather, container, false);
 
-        WeatherManComponent build = DaggerWeatherManComponent.builder().build();
-        build.inject(this);
+        DaggerWeatherManComponent.builder()
+                .activityModule(new ActivityModule(getActivity()))
+                .build()
+                .inject(this);
 
-        Call<DailyWeather> weeklyForecast = darkSkyService.getWeeklyForecast(DARK_SKY_API_KEY,
-                "37.8267,-122.4233");
+        maxTodayTemperature = (TextView) view.findViewById(R.id.max_today_temperature);
+        minTodayTemperature = (TextView) view.findViewById(R.id.min_today_temperature);
+        summaryTodayTemperature = (TextView) view.findViewById(R.id.today_weather_summary);
+        weatherRecyclerView = (RecyclerView) view.findViewById(R.id.weather_list_recycler_view);
+        weatherRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        weatherRecyclerView.setAdapter(weatherAdapter);
+
+        Call<DailyWeather> weeklyForecast = weatherForecastService.getWeeklyForecast(DARK_SKY_API_KEY,
+                "-23.18570,-46.89780");
+
         weeklyForecast.enqueue(new Callback<DailyWeather>() {
             @Override
             public void onResponse(Call<DailyWeather> call, Response<DailyWeather> response) {
-                System.out.println("" + response.body().getDailyWeatherData().getWeatherDatas());
+                updateView(response.body().getDailyWeatherData().getWeatherDatas());
                 Log.d("Ma oeeeee", "");
             }
 
@@ -54,7 +77,15 @@ public class ListWeatherActivityFragment extends Fragment {
             }
         });
 
-
         return view;
+    }
+
+    private void updateView(List<DailyWeather.WeatherData.Weather> weatherDatas) {
+        maxTodayTemperature.setText(toDecimal(weatherDatas.get(0).getTemperatureMax()));
+        minTodayTemperature.setText(toDecimal(weatherDatas.get(0).getTemperatureMin()));
+        summaryTodayTemperature.setText(weatherDatas.get(0).getSummary());
+        weatherDatas.remove(0);
+        weatherAdapter.addAll(weatherDatas);
+        weatherRecyclerView.getAdapter().notifyDataSetChanged();
     }
 }

@@ -1,4 +1,6 @@
-package jonss.com.github.weatherman;
+package jonss.com.github.weatherman.utils;
+
+import jonss.com.github.weatherman.BuildConfig;
 
 /**
  * Created by joao on 27/01/17.
