@@ -2,6 +2,7 @@ package jonss.com.github.weatherman.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -23,6 +24,8 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder {
     TextView maxTemperatureTextView;
     @BindView(R.id.min_temperature_text_view)
     TextView minTemperatureTextView;
+    @BindView(R.id.icon_item_image_view)
+    ImageView iconImageView;
 
     public WeatherViewHolder(View itemView) {
         super(itemView);
@@ -30,6 +33,8 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setWeatherView(DailyWeather.WeatherData.Weather weather) {
+        System.out.println(weather);
+        iconImageView.setImageResource(weather.chooseIcon());
         maxTemperatureTextView.setText(toDecimal(weather.getTemperatureMax()));
         minTemperatureTextView.setText(toDecimal(weather.getTemperatureMin()));
         summaryTemperatureTextView.setText(weather.getSummary());

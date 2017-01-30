@@ -1,5 +1,6 @@
 package jonss.com.github.weatherman;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -38,6 +40,8 @@ public class ListWeatherActivityFragment extends Fragment {
     TextView summaryTodayTemperature;
     @BindView(R.id.weather_list_recycler_view)
     RecyclerView weatherRecyclerView;
+    @BindView(R.id.today_weather_icon)
+    ImageView todayIconImageView;
 
     @Inject
     WeatherAdapter weatherAdapter;
@@ -83,6 +87,7 @@ public class ListWeatherActivityFragment extends Fragment {
     }
 
     private void updateView(List<DailyWeather.WeatherData.Weather> weatherDatas) {
+        todayIconImageView.setImageResource(weatherDatas.get(0).chooseIcon());
         maxTodayTemperature.setText(toDecimal(weatherDatas.get(0).getTemperatureMax()));
         minTodayTemperature.setText(toDecimal(weatherDatas.get(0).getTemperatureMin()));
         summaryTodayTemperature.setText(weatherDatas.get(0).getSummary());

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_list_weather"
     android:layout_width="match_parent"
@@ -27,8 +28,7 @@
                 android:id="@+id/max_today_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/today_weather_summary"
-                android:layout_toRightOf="@+id/today_weather_summary" />
+                />
 
             <TextView
                 android:id="@+id/today_weather_summary"
@@ -46,8 +46,18 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
                 android:textSize="35sp" />
-        </RelativeLayout>
 
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@mipmap/ic_weather_man_launcher"
+                android:layout_below="@+id/today_weather_summary"
+                android:layout_toRightOf="@+id/min_today_temperature"
+                android:layout_toEndOf="@+id/min_today_temperature"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:id="@+id/today_weather_icon" />
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
