@@ -11,7 +11,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import jonss.com.github.weatherman.ListWeatherActivity;
 import jonss.com.github.weatherman.R;
 import jonss.com.github.weatherman.model.DailyWeather;
 

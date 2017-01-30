@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jonss.com.github.weatherman.api.WeatherForecastService;
 import jonss.com.github.weatherman.di.ActivityModule;
 import jonss.com.github.weatherman.di.DaggerWeatherManComponent;
@@ -27,11 +29,14 @@ import static jonss.com.github.weatherman.utils.Constants.DARK_SKY_API_KEY;
 import static jonss.com.github.weatherman.utils.StringUtils.toDecimal;
 
 public class ListWeatherActivityFragment extends Fragment {
-    
-    TextView maxTodayTemperature;
-    TextView minTodayTemperature;
-    TextView summaryTodayTemperature;
 
+    @BindView(R.id.max_today_temperature)
+    TextView maxTodayTemperature;
+    @BindView(R.id.min_today_temperature)
+    TextView minTodayTemperature;
+    @BindView(R.id.today_weather_summary)
+    TextView summaryTodayTemperature;
+    @BindView(R.id.weather_list_recycler_view)
     RecyclerView weatherRecyclerView;
 
     @Inject
@@ -48,16 +53,13 @@ public class ListWeatherActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_list_weather, container, false);
+        ButterKnife.bind(this, view);
 
         DaggerWeatherManComponent.builder()
                 .activityModule(new ActivityModule(getActivity()))
                 .build()
                 .inject(this);
 
-        maxTodayTemperature = (TextView) view.findViewById(R.id.max_today_temperature);
-        minTodayTemperature = (TextView) view.findViewById(R.id.min_today_temperature);
-        summaryTodayTemperature = (TextView) view.findViewById(R.id.today_weather_summary);
-        weatherRecyclerView = (RecyclerView) view.findViewById(R.id.weather_list_recycler_view);
         weatherRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         weatherRecyclerView.setAdapter(weatherAdapter);
 
@@ -68,7 +70,7 @@ public class ListWeatherActivityFragment extends Fragment {
             @Override
             public void onResponse(Call<DailyWeather> call, Response<DailyWeather> response) {
                 updateView(response.body().getDailyWeatherData().getWeatherDatas());
-                Log.d("Ma oeeeee", "");
+                Log.d("Ma oeeeee", "API Funcionou!");
             }
 
             @Override
