@@ -1,4 +1,4 @@
-package jonss.com.github.weatherman.ui;
+package jonss.com.github.weatherman.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

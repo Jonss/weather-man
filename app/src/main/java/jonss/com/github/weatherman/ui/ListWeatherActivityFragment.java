@@ -1,6 +1,5 @@
-package jonss.com.github.weatherman;
+package jonss.com.github.weatherman.ui;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,11 +17,12 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jonss.com.github.weatherman.R;
 import jonss.com.github.weatherman.api.WeatherForecastService;
 import jonss.com.github.weatherman.di.ActivityModule;
 import jonss.com.github.weatherman.di.DaggerWeatherManComponent;
 import jonss.com.github.weatherman.model.DailyWeather;
-import jonss.com.github.weatherman.ui.WeatherAdapter;
+import jonss.com.github.weatherman.ui.adapter.WeatherAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

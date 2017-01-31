@@ -1,4 +1,4 @@
-package jonss.com.github.weatherman.ui;
+package jonss.com.github.weatherman.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,8 +18,6 @@ import static jonss.com.github.weatherman.utils.StringUtils.toDecimal;
 
 public class WeatherViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.summary_temperature_text_view)
-    TextView summaryTemperatureTextView;
     @BindView(R.id.max_temperature_text_view)
     TextView maxTemperatureTextView;
     @BindView(R.id.min_temperature_text_view)
@@ -33,12 +31,9 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setWeatherView(DailyWeather.WeatherData.Weather weather) {
-        System.out.println(weather);
         iconImageView.setImageResource(weather.chooseIcon());
         maxTemperatureTextView.setText(toDecimal(weather.getTemperatureMax()));
         minTemperatureTextView.setText(toDecimal(weather.getTemperatureMin()));
-        summaryTemperatureTextView.setText(weather.getSummary());
     }
-
 
 }

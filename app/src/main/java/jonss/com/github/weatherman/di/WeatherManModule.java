@@ -5,7 +5,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 import jonss.com.github.weatherman.api.WeatherForecastService;
-import jonss.com.github.weatherman.ui.WeatherAdapter;
+import jonss.com.github.weatherman.ui.adapter.WeatherAdapter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 public class StringUtils {
 
     public static String toDecimal(Double d) {
-        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormat df = new DecimalFormat("#º");
         return df.format(d);
     }
 }

@@ -38,10 +38,6 @@ public class DailyWeather {
                 return summary;
             }
 
-            public String getIcon() {
-                return icon;
-            }
-
             public Long getTime() {
                 return time;
             }
